@@ -55,7 +55,7 @@ const login = async (req, res) => {
 
      userInfo.password = undefined
 
-    return res.status(200).json({ user: userInfo, token: token, role: userInfo.role});
+    return res.status(200).json({ user: userInfo, token: token, role: userInfo.role, id: userInfo._id});
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -93,9 +93,9 @@ const addInvoice = async (req, res) => {
 
 const getAllParcels = async (req, res) => {
   try {
-    const { _id } = req.params;
-    const userInfo = await User.findOne( _id );
-    console.log(_id);
+    const { id } = req.params;
+    const userInfo = await User.findById(id);
+    console.log("está llegando el id" , id);
     console.log(userInfo);
     console.log(userInfo.parcel);
     return res.status(200).json(userInfo.parcel);

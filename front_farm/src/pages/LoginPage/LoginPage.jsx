@@ -20,6 +20,7 @@ export default function LoginPage() {
           const res = await axiosInstance.post('/user/login', data)
           localStorage.setItem('token', res.data.token)
           localStorage.setItem('role', res.data.role)
+          localStorage.setItem('UserId', res.data.id)
           navigate('/home')
         
       }catch(err){
