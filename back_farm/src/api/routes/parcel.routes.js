@@ -5,8 +5,8 @@ const upload = require ("../../middlewares/upload.file")
 
 const parcelRoutes = express.Router();
 
+// parcelRoutes.get("/:id", getParcelInfo);
 parcelRoutes.get("", [isAuth], getParcel);
-parcelRoutes.get("/:id", [isAuth], getParcelInfo);
 parcelRoutes.post("", [isAdmin], postParcel);
 parcelRoutes.put("/:id", putParcel);
 parcelRoutes.delete("/:id", [isAdmin], deleteParcel);

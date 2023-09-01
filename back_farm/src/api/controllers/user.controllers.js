@@ -1,4 +1,8 @@
 const User = require("../models/user.models");
+const Parcel = require("../models/parcel.models");
+const Invoice = require("../models/invoice.models");
+const Calendar = require("../models/calendar.models");
+
 const bcrypt = require("bcrypt");
 const {
   validateEmail,
@@ -6,6 +10,7 @@ const {
   usedEmail,
 } = require("../../utils/validators");
 const { generateSign } = require("../../utils/jwt");
+const parcel = require("../models/parcel.models");
 
 const register = async (req, res) => {
   
@@ -92,13 +97,47 @@ const addInvoice = async (req, res) => {
 };
 
 const getAllParcels = async (req, res) => {
+  const parcels = [];
+  const calendar = [];
+
+  try {
+    const { id } = req.params;
+    const userInfo = await User.findById(id);
+    // console.log("está llegando el id" , id);
+    // console.log(userInfo);
+    // console.log(userInfo.parcel);
+    for (let index=0; index<userInfo.parcel.length; index++){
+      const userParcelInfo = await Parcel.findById(userInfo.parcel[index]);
+      parcels.push(userParcelInfo)
+      console.log(userInfo)
+      // for (let j=0; j<userParcelInfo.calendar.length; j++){
+      //   const calendarInfo= await Calendar.findById(userParcelInfo.calendar[j]);
+      //   calendar.push(calendarInfo)
+      //   console.log(calendar)
+        
+      // }
+    }
+    return res.status(200).json(parcels);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+const getAllInvoices = async (req, res) => {
+  const invoices = [];
+
   try {
     const { id } = req.params;
     const userInfo = await User.findById(id);
     console.log("está llegando el id" , id);
     console.log(userInfo);
-    console.log(userInfo.parcel);
-    return res.status(200).json(userInfo.parcel);
+    console.log(userInfo.invoice);
+    for (let index=0; index<userInfo.invoice.length; index++){
+      const userInvoiceInfo = await Invoice.findById(userInfo.invoice[index]);
+      invoices.push(userInvoiceInfo)
+      console.log(invoices)
+    }
+    return res.status(200).json(invoices);
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -158,4 +197,4 @@ const postUser = async (req, res) => {
   };
 
 
-module.exports = { register, login, addParcel, addInvoice, getAllParcels, getUser, postUser, putUser, deleteUser };
+module.exports = { register, login, addParcel, addInvoice, getAllParcels, getUser, postUser, putUser, deleteUser, getAllInvoices };
