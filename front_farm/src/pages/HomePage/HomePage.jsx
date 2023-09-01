@@ -4,11 +4,11 @@ import axios from "axios";
 const HomePage = () => {
 
   const getParcel = async () => {
-    const resultado = await axios(
-      "http://localhost:5000/user/userAllParcels/64ef5ad09f1468886016542c"
-    );
+  //   const resultado = await axios(
+  //     "http://localhost:5000/user/userAllParcels/64ef5ad09f1468886016542c"
+  //   );
 
-    console.log(resultado);
+  //   console.log(resultado);
   };
 
   useEffect(() => {
