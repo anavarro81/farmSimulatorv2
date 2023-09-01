@@ -30,7 +30,7 @@ useEffect(() => {
 
   return (
     <div>
-      <h1>{parcels}</h1>
+      <h1>PArcelas</h1>
     </div>
   )
 

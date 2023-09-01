@@ -12,9 +12,10 @@ const getParcel = async (req, res) => {
 // Devuelve información de la parcela por id. 
 const getParcelInfo = async (req, res) => {
   try {
-    const { _id } = req.params;
-    const userParcelInfo = await User.findOne( _id );
-  
+    const {id} = req.params;
+    const userParcelInfo = await Parcel.findById(id);
+    console.log("id", id)
+    console.log(userParcelInfo)
     return res.status(200).json(userParcelInfo);
   } catch (error) {
     return res.status(500).json(error);
@@ -25,7 +26,7 @@ const postParcel = async (req, res) => {
   try {
     const newParcel = new Parcel(req.body);
     if (req.file) {
-      newParcel.img = req.file.path;
+      // newParcel.img = req.file.path;
     }
     const createdParcel = await newParcel.save();
 
