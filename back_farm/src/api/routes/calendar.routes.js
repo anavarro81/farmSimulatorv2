@@ -5,7 +5,7 @@ const {isAuth, isAdmin} = require("../../middlewares/auth");
 const calendarRoutes = express.Router();
 
 calendarRoutes.get("/:id", [isAuth], getCalendar);
-calendarRoutes.post("", [isAuth], postCalendar);
+calendarRoutes.post("", postCalendar);
 calendarRoutes.put("/:id", [isAuth], putCalendar);
 calendarRoutes.delete("/:id", [isAuth], deleteCalendar);
 

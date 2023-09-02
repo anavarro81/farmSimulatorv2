@@ -9,11 +9,15 @@ const NavBar = () => {
 
   const token = localStorage.getItem('token')
   const role = localStorage.getItem('role')
+  const userID=localStorage.getItem('userID')
 
   console.log("Estoy conectado con el rol", role);
+  console.log("Conectado con id", userID )
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    localStorage.removeItem('userID')
   }
 
   return  <>
