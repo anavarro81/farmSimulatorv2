@@ -12,7 +12,6 @@ const getCalendar = async (req, res) => {
 const postCalendar = async (req, res) => {
   try {
     const newCalendar = new Calendar(req.body);
-    newCalendar.img = req.file.path;
     const createdCalendar = await newCalendar.save();
 
     return res.status(201).json(createdCalendar);

@@ -123,25 +123,6 @@ const getAllParcels = async (req, res) => {
   }
 };
 
-const getAllInvoices = async (req, res) => {
-  const invoices = [];
-
-  try {
-    const { id } = req.params;
-    const userInfo = await User.findById(id);
-    console.log("está llegando el id" , id);
-    console.log(userInfo);
-    console.log(userInfo.invoice);
-    for (let index=0; index<userInfo.invoice.length; index++){
-      const userInvoiceInfo = await Invoice.findById(userInfo.invoice[index]);
-      invoices.push(userInvoiceInfo)
-      console.log(invoices)
-    }
-    return res.status(200).json(invoices);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
 
 const getUser = async (req, res) => {
     try {
@@ -151,6 +132,18 @@ const getUser = async (req, res) => {
       return res.status(500).json(error);
     }
   };
+
+const getUserDetail = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const userInfo = await User.findById(id);
+    console.log("id", id)
+    console.log(userInfo)
+    return res.status(200).json(userInfo);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
 
 const postUser = async (req, res) => {
     try {
@@ -196,5 +189,45 @@ const postUser = async (req, res) => {
     }
   };
 
+  // Devuelve todas las facturas del usuario
 
-module.exports = { register, login, addParcel, addInvoice, getAllParcels, getUser, postUser, putUser, deleteUser, getAllInvoices };
+const getAllInvoices = async (req, res) => {
+  try {
+    
+    const {id} = req.params;
+
+    console.log('Estoy llegando con el id =', id);
+
+
+    const userInfo = await User.findOne({ _id: id });
+    console.log("Hago la consulta y devuelvo = ", userInfo);
+    
+    console.log("Llego en con id: ", id);
+    // console.log(userInfo);
+    console.log("Tengo las facturas: ", userInfo.invocice);
+    
+    return res.status(200).json(userInfo.invoice);
+  } catch (error) {
+    console.log("Doy error", error);
+    return res.status(500).json(error);
+  }
+};
+
+
+// Devuelve todos los usuarios de un rol. 
+const getUserbyRol = async (req, res) => {
+
+  const {role} = req.params;
+
+  try {
+    const allUser = await User.find( { role: role } )
+    
+    
+    return res.status(200).json(allUser);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+
+module.exports = { register, login, addParcel, addInvoice, getAllParcels, getUser, postUser, putUser, deleteUser, getAllInvoices, getUserDetail, getUserbyRol };

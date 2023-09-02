@@ -1,5 +1,5 @@
 const express = require("express");
-const {register,login, addParcel, addInvoice, getAllParcels, getUser, putUser, postUser, deleteUser, getAllInvoices} = require("../controllers/user.controllers");
+const {register,login, addParcel, addInvoice, getAllParcels, getUser, putUser, postUser, deleteUser, getAllInvoices, getUserDetail, getUserbyRol} = require("../controllers/user.controllers");
 const {isAuth, isAdmin} = require("../../middlewares/auth");
 const userRoutes = express.Router();
 
@@ -8,11 +8,14 @@ userRoutes.post("/login", login);
 userRoutes.put("/userParcel/:id", [isAuth], addParcel);
 userRoutes.put("/userInvoice/:id", [isAuth], addInvoice);
 userRoutes.get("/userAllParcels/:id", getAllParcels);
-userRoutes.get("/userAllInvoices/:id", getAllInvoices);
-userRoutes.get("", [isAdmin], getUser);
+userRoutes.get("/", getUser);
+userRoutes.get("/:id",getUserDetail);
 userRoutes.put("/:id", [isAuth], putUser);
-// userRoutes.post("", postUser);
+userRoutes.post("", postUser);
 userRoutes.delete("/:id", [isAdmin], deleteUser);
+userRoutes.get("/getUserByRol/:role", getUserbyRol);
+// Facturas Invoices
+userRoutes.get("/getAllInvoices/:id", getAllInvoices);
 
 
 
