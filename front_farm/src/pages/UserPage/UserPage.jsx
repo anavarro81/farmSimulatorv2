@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../utils/axios'
 import AuthRole from '../../auth/AuthRole';
+import { Form } from 'react-router-dom';
 
 
 export default function UserPage() {
@@ -11,6 +12,16 @@ export default function UserPage() {
   const [user, setUser]= useState([]);
   const [users, setUsers] = useState([]);
   const [usersForAdmin, setUsersForAdmin] = useState([]);
+  const [email, setEmail] = useState("")
+  const [name, setName] = useState("");
+  
+  const handleChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
 
 
   const GetUser = async () => {
@@ -19,7 +30,7 @@ export default function UserPage() {
 
   try{
     const res = await axiosInstance.get("user/"+userID);
-    setUser(res.data)
+    setUser(res.data)    
     console.log(res.data)
 
   
@@ -28,10 +39,22 @@ export default function UserPage() {
 }
 }
 
-const putUser = async () => {
+const putUser = async (userID) => {
+  console.log("holas");
+ // e.preventDefault()
+
+  const data = {
+    name: name,
+    email: email,
+    }
+    console.log("e", userID);
+    console.log(name);
+    console.log(email);
   try{
-    const res = await axiosInstance.put("user/" +userID);
+    const res = await axiosInstance.put("user/" +userID, data);
     console.log("Todo ok");
+   
+      console.log(data);
 
   }catch(err){
     console.log(err);
@@ -64,6 +87,9 @@ try{
   const res = await axiosInstance.get("user/"+e.target.value);
   setUsersForAdmin(res.data)
   console.log(res.data)
+  setName(res.data.name);
+  setEmail(res.data.email);
+
 
 
 }catch(err){
@@ -110,6 +136,16 @@ useEffect(() => {
       <button onClick={() => deleteUser(usersForAdmin._id)}
 >Eliminar usuario</button>
  </div>}
+ <form onSubmit={putUser(usersForAdmin._id)}>
+    <label htmlFor="name"> Nombre </label>
+    <input type="text" value={name} name='name' onChange={handleChange}/>
+    <label htmlFor="email"> Email </label>
+    <input type="text" value={email} name='email' onChange={handleEmailChange}/>
+    <label htmlFor="email"> Email </label>
+
+      <button>Actualizar datos</button> 
+</form>
+
   </AuthRole>
  </>
  )

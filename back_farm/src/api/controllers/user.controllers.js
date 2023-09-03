@@ -169,7 +169,7 @@ const postUser = async (req, res) => {
         new: true,
       });
       if (!updatedUser) {
-        return res.status(404).json({ message: "no existe este id de pelicula" });
+        return res.status(404).json({ message: "no existe este id de usuario" });
       }
       return res.status(200).json(updatedUser);
     } catch (error) {

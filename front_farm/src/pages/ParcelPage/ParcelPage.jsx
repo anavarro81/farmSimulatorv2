@@ -3,6 +3,7 @@ import { axiosInstance } from '../../utils/axios'
 import { Link } from "react-router-dom"
 import styled from 'styled-components'
 import AuthRole from '../../auth/AuthRole';
+import SearchText from '../../components/SearchText/SearchText';
 
 
 
@@ -17,6 +18,7 @@ export default function ParcelPage() {
   const [parcels, setParcels]= useState([]);
   const [parcelsForEdit, setParcelsForEdit] = useState([])
   const [users, setUsers] = useState([])
+  const [parcelsCopy, setparcelsCopy]= useState([])
 
 
   const GetParcels = async () => {
@@ -53,6 +55,9 @@ useEffect(() => {
   }
   
 }, [])
+useEffect(() => {
+  setparcelsCopy([...parcels]);
+}, [parcels]);
 
 const onSubmit = async (e) => {
   e.preventDefault()
@@ -88,9 +93,19 @@ const getAllParcels = async (e) => {
   setParcelsForEdit(res.data)
 }
 
+const updateFilter = (name) => {
+  console.log(name);
+  const parcelsAux = parcels.filter((parcel) =>
+    parcel.name.toLowerCase().includes(name.toLowerCase())
+  );
+  setparcelsCopy(parcelsAux);
+};
+
   return  <>
+
+  <SearchText search={updateFilter}/>
      
-      {parcels.map((item) => <div key={item._id}>
+      {parcelsCopy.map((item) => <div key={item._id}>
             <h2>Número de contador: {item.name}</h2>
             <h3>Plantación: {item.plant}</h3>
             <h3>Hectáreas: {item.has}</h3>
