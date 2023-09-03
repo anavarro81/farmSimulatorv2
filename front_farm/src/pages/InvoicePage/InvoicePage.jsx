@@ -66,7 +66,7 @@ export default function InvoicePage() {
 
 
       const res = await axiosInstance.post('/invoice/', data)
- 
+      alert("Factura añadida");
       
     }
     catch (err) {

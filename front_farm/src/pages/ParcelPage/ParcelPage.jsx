@@ -71,6 +71,7 @@ const onSubmit = async (e) => {
 
 
     const res = await axiosInstance.post('/parcel/', data)
+    alert("Parcela añadida");
 
     
   }

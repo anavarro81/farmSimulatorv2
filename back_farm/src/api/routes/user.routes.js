@@ -10,9 +10,9 @@ userRoutes.put("/userInvoice/:id", [isAuth], addInvoice);
 userRoutes.get("/userAllParcels/:id", getAllParcels);
 userRoutes.get("/", getUser);
 userRoutes.get("/:id",getUserDetail);
-userRoutes.put("/:id", [isAuth], putUser);
+userRoutes.put("/:id", putUser);
 userRoutes.post("", postUser);
-userRoutes.delete("/:id", [isAdmin], deleteUser);
+userRoutes.delete("/:id", deleteUser);
 userRoutes.get("/getUserByRol/:role", getUserbyRol);
 // Facturas Invoices
 userRoutes.get("/getAllInvoices/:id", getAllInvoices);

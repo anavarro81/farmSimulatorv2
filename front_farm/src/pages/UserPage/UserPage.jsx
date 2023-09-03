@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../utils/axios'
+import AuthRole from '../../auth/AuthRole';
 
-const role = localStorage.getItem("role");
-console.log("rol del usuario", role)
-const userID  =localStorage.getItem("UserId");
-console.log("Estoy en usuario y estoy conectado con el user: ", userID);
 
 export default function UserPage() {
-
+  const role = localStorage.getItem("role");
+  const userID  =localStorage.getItem("UserId");
+  console.log("Estoy en usuario y estoy conectado con el user: ", userID);
+  console.log("El Rol del usuario es: ", role);
   const [user, setUser]= useState([]);
-  const [parcels, setParcels]= useState([]);
+  const [users, setUsers] = useState([]);
+  const [usersForAdmin, setUsersForAdmin] = useState([]);
+
 
   const GetUser = async () => {
 
@@ -26,18 +28,89 @@ export default function UserPage() {
 }
 }
 
+const putUser = async () => {
+  try{
+    const res = await axiosInstance.put("user/" +userID);
+    console.log("Todo ok");
+
+  }catch(err){
+    console.log(err);
+  }
+}
+
+const deleteUser = async (userID) => {
+  try{
+    console.log(userID);
+    const res = await axiosInstance.delete("user/" +userID);
+    alert("Usuario eliminado");
+  }catch(err){
+    console.log(err)
+  }
+}
+
+const getUserByRol = async () => {
+
+  const res = await axiosInstance.get(`/user/getUserByRol/user`)
+  setUsers(res.data)
+
+}
+
+
+const getUsersForAdmin = async (e) => {
+
+  console.log("userID", userID)
+
+try{
+  const res = await axiosInstance.get("user/"+e.target.value);
+  setUsersForAdmin(res.data)
+  console.log(res.data)
+
+
+}catch(err){
+console.log(err)
+}
+}
 
 useEffect(() => {
-  GetUser();
-}, [])
+
+  if(role === "user"){
+    GetUser();
+  }
+  else{
+    getUserByRol();
+  }},
+  
+  [])
 
   return (
-    <div>
+    <>
+      {user.role === "user" && 
+      <div>
       <h1>Comunidad de Regantes Estrecho de Peñaroya</h1>
       <h2>Nombre: {user.name}</h2>
       <h2>Email: {user.email}</h2>
       {user.parcel && <h3>Número de parcelas: {user.parcel.length}</h3>}
       <h4>Localidad: Argamasilla de Alba</h4>
-    </div>
-  )
+ </div>}
+
+ <AuthRole> 
+ <h1>Ver Usuarios</h1>
+       <select name="user" id="user" onChange={(e) => getUsersForAdmin(e)}>
+        <option value=""> Seleccionar usuario </option>
+        {users?.map((item) => <option value={item._id}> {item.name} </option> )}
+        </select>
+        {user && 
+      <div>
+      <h1>Comunidad de Regantes Estrecho de Peñaroya</h1>
+      <h2>Nombre: {usersForAdmin.name}</h2>
+      <h2>Email: {usersForAdmin.email}</h2>
+      {usersForAdmin.parcel && <h3>Número de parcelas: {usersForAdmin.parcel.length}</h3>}
+      <h4>Localidad: Argamasilla de Alba</h4>
+    
+      <button onClick={() => deleteUser(usersForAdmin._id)}
+>Eliminar usuario</button>
+ </div>}
+  </AuthRole>
+ </>
+ )
 }
