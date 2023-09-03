@@ -72,4 +72,4 @@ const deleteParcel = async (req, res) => {
   }
 };
 
-module.exports = { getParcel, getParcelInfo,postParcel, putParcel, deleteParcel };
+module.exports = { getParcel, getParcelInfo, postParcel, putParcel, deleteParcel };
