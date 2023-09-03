@@ -1,5 +1,5 @@
 const express = require("express");
-const {register,login, addParcel, addInvoice, getAllParcels, getUser, putUser, postUser, deleteUser, getAllInvoices, getUserDetail, getUserbyRol} = require("../controllers/user.controllers");
+const {register,login, addParcel, addInvoice, getAllParcels, getUser, putUser, postUser, deleteUser, getAllInvoices, getUserDetail, getUserbyRol, getParcelsAndCalendars} = require("../controllers/user.controllers");
 const {isAuth, isAdmin} = require("../../middlewares/auth");
 const userRoutes = express.Router();
 
@@ -16,6 +16,7 @@ userRoutes.delete("/:id", [isAdmin], deleteUser);
 userRoutes.get("/getUserByRol/:role", getUserbyRol);
 // Facturas Invoices
 userRoutes.get("/getAllInvoices/:id", getAllInvoices);
+userRoutes.get("/getParcelsAndCalendars/:id", getParcelsAndCalendars);
 
 
 

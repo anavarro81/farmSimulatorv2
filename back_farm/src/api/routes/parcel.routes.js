@@ -7,7 +7,7 @@ const parcelRoutes = express.Router();
 
 // parcelRoutes.get("/:id", getParcelInfo);
 parcelRoutes.get("", [isAuth], getParcel);
-parcelRoutes.post("", [isAdmin], postParcel);
+parcelRoutes.post("", postParcel);
 parcelRoutes.put("/:id", putParcel);
 parcelRoutes.delete("/:id", [isAdmin], deleteParcel);
 
