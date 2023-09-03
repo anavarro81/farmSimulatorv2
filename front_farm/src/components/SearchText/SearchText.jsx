@@ -1,5 +1,4 @@
 import React from 'react'
-import "./SearchText.scss";
 
 const SearchText = ({search}) => {
     const handleChange = (event) => {
