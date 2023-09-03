@@ -9,23 +9,22 @@ const getCalendar = async (req, res) => {
   }
 };
 
-const postCalendar = async (req, res) => {
-  try {
-    const newCalendar = new Calendar(req.body);
-    const createdCalendar = await newCalendar.save();
+// const postCalendar = async (req, res) => {
+//   try {
+//     const newCalendar = new Calendar(req.body);
+//     const createdCalendar = await newCalendar.save();
 
-    return res.status(201).json(createdCalendar);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-};
+//     return res.status(201).json(createdCalendar);
+//   } catch (error) {
+//     return res.status(500).json(error);
+//   }
+// };
 
 const putCalendar = async (req, res) => {
   try {
     const { id } = req.params;
     const putCalendar = new Calendar(req.body);
     putCalendar._id = id;
-    putCalendar.img = req.file.path;
     const updatedCalendar = await Calendar.findByIdAndUpdate(id, putCalendar, {
       new: true,
     });
@@ -50,4 +49,23 @@ const deleteCalendar = async (req, res) => {
   }
 };
 
-module.exports = { getCalendar, postCalendar, putCalendar, deleteCalendar };
+const addCalendar = async (req, res) => {
+
+  console.log('Estoy en addCalendar')
+
+
+  try {
+    const newCalendar = new Calendar(req.body);
+
+    console.log('Me llegan datos: ', req.body)
+
+    const createdCalendar = await newCalendar.save();
+    return res.status(201).json(createdCalendar);
+
+  } catch (error) {
+    console.log('Doy error: ', error)
+    return res.status(500).json(error);
+  }
+};
+
+module.exports = { getCalendar, addCalendar, deleteCalendar, putCalendar };

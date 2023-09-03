@@ -1,4 +1,5 @@
 const Parcel = require("../models/parcel.models");
+const User = require("../models/user.models");
 
 const getParcel = async (req, res) => {
   try {
@@ -29,9 +30,14 @@ const postParcel = async (req, res) => {
       // newParcel.img = req.file.path;
     }
     const createdParcel = await newParcel.save();
+    const updatedUser = await User.findByIdAndUpdate(req.body.user,
+      { $addToSet: { parcel: createdParcel._id } },
+      { new: true }
+    );
 
     return res.status(201).json(createdParcel);
   } catch (error) {
+    console.log(error)
     return res.status(500).json(error);
   }
 };
