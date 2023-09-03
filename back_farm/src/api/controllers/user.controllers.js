@@ -229,5 +229,47 @@ const getUserbyRol = async (req, res) => {
   }
 };
 
+// Devuelve todos los calendarios de las paracelsas de un usuario. 
+const getParcelsAndCalendars = async (req, res) => {
 
-module.exports = { register, login, addParcel, addInvoice, getAllParcels, getUser, postUser, putUser, deleteUser, getAllInvoices, getUserDetail, getUserbyRol };
+  console.log('Estoy en: getParcelsAndCalendar');
+
+  try {
+
+
+    const { id } = req.params;
+    const userInfo = await User.findById(id);
+    arrayParcelsCalendar = []
+    let obj = { "parcel_id": 0, "calendars": [] };
+
+    console.log(' Consulto con el id = ', id);
+
+    // console.log ('Parcel = ', userInfo.parcel);
+
+    for (const parcel of userInfo.parcel) {
+      // console.log ('Parcel = ', parcel);
+
+      const userParcel = await Parcel.findById(parcel);
+      obj.parcel_id = parcel;
+
+      for (const calendar of userParcel.calendar) {
+
+        console.log("Parcela = " + parcel + ", Calendar = " + calendar)
+        obj.calendars.push(calendar);
+      }
+      arrayParcelsCalendar.push(obj);
+      obj = { "parcel_id": 0, "calendars": [] };
+    }
+
+    console.log(arrayParcelsCalendar)
+    return res.status(200).json(arrayParcelsCalendar);
+
+  } catch (error) {
+    console.log('Error en: getParcelsAndCalendar =>', error);
+  }
+
+
+}
+
+
+module.exports = { register, login, addParcel, addInvoice, getAllParcels, getUser, postUser, putUser, deleteUser, getAllInvoices, getUserDetail, getUserbyRol, getParcelsAndCalendars };
