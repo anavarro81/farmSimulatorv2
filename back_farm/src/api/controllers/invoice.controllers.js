@@ -89,7 +89,7 @@ const putInvoice = async (req, res) => {
     console.log('He podido hacer el INSERT');
 
     if (!updatedInvoice) {
-      return res.status(404).json({ message: "no existe este id de director" });
+      return res.status(404).json({ message: "no existe este id de factura" });
     }
     return res.status(200).json(updatedInvoice);
   } catch (error) {
@@ -97,14 +97,28 @@ const putInvoice = async (req, res) => {
   }
 };
 const deleteInvoice = async (req, res) => {
+
+  console.log(' Borrado de factura ')
+
   try {
-    const {id} = req.params;
+    const {id, user} = req.params;
+                 
+    
+    console.log(' Se va a borrar la factura con id = ', id)
+    console.log(' EL usuario es = ', user)
+    
+// Borra la factura de la tabla invoices
     const deletedInvoice = await Invoice.findByIdAndDelete(id)
-    if (!deletedInvoice) {
-        return res.status(404).json({message:"este id no existe"})
-    }
+    
+// Borra la relacion de la factura con el usuario. 
+    const deleteUserInvoice = await User.updateOne( { _id: user }, { $pull: { invoice: id } }  )
+
+    console.log('El resultado del borrado en usuarios es: ', deleteUserInvoice)
+    
     return res.status(200).json(deletedInvoice);
+
   } catch (error) {
+    console.log(' Error borrando la factura. ERROR = ', error)
     return res.status(500).json(error)
   }
 };

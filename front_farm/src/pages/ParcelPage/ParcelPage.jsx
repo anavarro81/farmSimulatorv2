@@ -19,7 +19,7 @@ export default function ParcelPage() {
   const [parcelsForEdit, setParcelsForEdit] = useState([])
   const [users, setUsers] = useState([])
   const [parcelsCopy, setparcelsCopy]= useState([])
-
+  
 
   const GetParcels = async () => {
 
@@ -91,6 +91,7 @@ const getAllParcels = async (e) => {
   console.log(e.target.value)
   const res = await axiosInstance.get(`/user/userAllParcels/${e.target.value}`)
   setParcelsForEdit(res.data)
+
 }
 
 const updateFilter = (name) => {
@@ -110,7 +111,7 @@ const updateFilter = (name) => {
             <h3>Plantación: {item.plant}</h3>
             <h3>Hectáreas: {item.has}</h3>
             <img src={item.img} alt={item.name}/>
-            <Link to={"/calendar"}>Regar/Abrir calendario</Link>
+            <Link to={`/calendar/${item._id}`}>Regar/Abrir calendario</Link>
         </div>)
       }
 
@@ -168,6 +169,7 @@ const updateFilter = (name) => {
             <h3>Plantación: {item.plant}</h3>
             <h3>Hectáreas: {item.has}</h3>
             <img src={item.img} alt={item.name}/>
+            
         </div>)
       }
 

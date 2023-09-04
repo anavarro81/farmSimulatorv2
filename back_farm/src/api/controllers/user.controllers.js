@@ -162,12 +162,19 @@ const postUser = async (req, res) => {
   const putUser = async (req, res) => {
     try {
       const { id } = req.params;
-      const putUser = new User(req.body);
-      putUser._id = id;
+      // const putUser = new User(req.body);
+      // putUser._id = id;
       // putParcel.img = req.file.path;
-      const updatedUser = await User.findByIdAndUpdate(id, putUser, {
-        new: true,
-      });
+      const updatedUser = await User.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            name: req.body.name,
+            email: req.body.email
+          }
+        },
+        { new: true }
+      );
       if (!updatedUser) {
         return res.status(404).json({ message: "no existe este id de usuario" });
       }
