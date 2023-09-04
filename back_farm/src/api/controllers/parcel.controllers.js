@@ -43,6 +43,34 @@ const postParcel = async (req, res) => {
   }
 };
 
+const updateParcel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // const putUser = new User(req.body);
+    // putUser._id = id;
+    // putParcel.img = req.file.path;
+    const updatedParcel = await Parcel.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          name: req.body.name,
+          plant: req.body.plant,
+          has: req.body.has,
+          img: req.body.img
+        }
+      },
+      { new: true }
+    );
+    if (!updatedParcel) {
+      return res.status(404).json({ message: "no existe este id de parcel" });
+    }
+    return res.status(200).json(updatedParcel);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+//asocia calendario a parcela
 const putParcel = async (req, res) => {
   try {
     const { id } = req.params;
@@ -63,6 +91,8 @@ const putParcel = async (req, res) => {
     return res.status(500).json(error);
   }
 };
+
+
 const deleteParcel = async (req, res) => {
   try {
     const {id, user} = req.params;
@@ -72,12 +102,12 @@ const deleteParcel = async (req, res) => {
 
     const deleteUserParcel = await User.updateOne( { _id: user }, { $pull: { parcel: id } } )
 
-    console.log('El resultado del borrado en usuarios es: ', deleteUserParcel)
+    console.log('El resultado del borrar en usuarios es: ', deleteUserParcel)
    
     return res.status(200).json(deletedParcel);
   } catch (error) {
 
-    console.log(' Error borrando la factura. ERROR = ', error)
+    console.log(' Error borrando la parcela. ERROR = ', error)
 
     return res.status(500).json(error)
   }
@@ -93,4 +123,4 @@ const addCalendarToParcel =async (req, res) => {
     { new: true } )
 }
 
-module.exports = { getParcel, getParcelInfo, postParcel, putParcel, deleteParcel, addCalendarToParcel };
+module.exports = { getParcel, getParcelInfo, postParcel, putParcel, deleteParcel, addCalendarToParcel, updateParcel };

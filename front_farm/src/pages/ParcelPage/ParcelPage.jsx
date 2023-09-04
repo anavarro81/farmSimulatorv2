@@ -18,6 +18,7 @@ export default function ParcelPage() {
   const [parcels, setParcels]= useState([]);
   const [parcelsForEdit, setParcelsForEdit] = useState([])
   const [users, setUsers] = useState([])
+  const [user, setUser] = useState("")
   const [parcelsCopy, setparcelsCopy]= useState([])
   
 
@@ -35,6 +36,8 @@ export default function ParcelPage() {
   console.log(err)
 }
 }
+
+
 
 const getUserByRol = async () => {
 
@@ -91,7 +94,23 @@ const getAllParcels = async (e) => {
   console.log(e.target.value)
   const res = await axiosInstance.get(`/user/userAllParcels/${e.target.value}`)
   setParcelsForEdit(res.data)
+  setUser(e.target.value)
 
+}
+
+
+const deleteParcel = async (id) => {
+  console.log('Estoy borrando la parcela')
+
+  try {
+    const res = await axiosInstance.delete(`/parcel/delete/${id}/${user}`)
+    alert('Parcela eliminada corectamente'); 
+    window.location.reload();
+
+  }
+  catch(err) {
+    console.log('No se ha podido borrar la parcela')
+  }
 }
 
 const updateFilter = (name) => {
@@ -101,85 +120,85 @@ const updateFilter = (name) => {
   );
   setparcelsCopy(parcelsAux);
 };
+return  <>
 
-  return  <>
 
-  <SearchText search={updateFilter}/>
-     
-      {parcelsCopy.map((item) => <div key={item._id}>
-            <h2>Número de contador: {item.name}</h2>
-            <h3>Plantación: {item.plant}</h3>
-            <h3>Hectáreas: {item.has}</h3>
-            <img src={item.img} alt={item.name}/>
-            <Link to={`/calendar/${item._id}`}>Regar/Abrir calendario</Link>
-        </div>)
-      }
+{role === "user" && <SearchText search={updateFilter}/>}
 
-      <AuthRole>
-    <form onSubmit={onSubmit}>
 
-      <h2> Alta de parcela </h2>
-    {/* Listado de usurios */}
- 
-    <select name="user" id="user">
-        <option value=""> Seleccionar usuario </option>
-        {users?.map((item) => <option value={item._id}> {item.name} </option>
-        
-        )}
+    {parcelsCopy.map((item) => <div key={item._id}>
+          <h2>Número de contador: {item.name}</h2>
+          <h3>Plantación: {item.plant}</h3>
+          <h3>Hectáreas: {item.has}</h3>
+          <img src={item.img} alt={item.name}/>
+          <Link to={`/calendar/${item._id}`}>Regar/Abrir calendario</Link>
+      </div>)
+    }
 
-        
-      </select>
+    <AuthRole>
+  <form onSubmit={onSubmit}>
 
-      <div>
-        <label htmlFor="">Nombre de parcela</label>
-        <input type="text" name='name' />
-      </div>
+    <h2> Alta de parcela </h2>
+  {/* Listado de usurios */}
 
-      <div>
-        <label htmlFor="">Plantación</label>
-        <input type="text" name='plant' />
-      </div>
+  <select name="user" id="user">
+      <option value=""> Seleccionar usuario </option>
+      {users?.map((item) => <option value={item._id}> {item.name} </option>
 
-      <div>
-        <label htmlFor="">Hectáreas</label>
-        <input type="number" name='has' />
-      </div>
+      )}
 
-      <div>
-        <label htmlFor="">Imagen</label>
-        <input type="text" name='img' />
-      </div>
 
-      <button> Subir Parcela </button>
-
-    </form>
+    </select>
 
     <div>
-      <h1>Ver Parcelas</h1>
-      <select name="user" id="user" onChange={(e) => getAllParcels(e)}>
-        <option value=""> Seleccionar usuario </option>
-        {users?.map((item) => <option value={item._id}> {item.name} </option>
-        
-        )}
-
-      </select>
-
-      {parcelsForEdit.map((item) => <div key={item._id}>
-            <h2>Número de contador: {item.name}</h2>
-            <h3>Plantación: {item.plant}</h3>
-            <h3>Hectáreas: {item.has}</h3>
-            <img src={item.img} alt={item.name}/>
-            
-        </div>)
-      }
-
+      <label htmlFor="">Nombre de parcela</label>
+      <input type="text" name='name' />
     </div>
-  
-    </AuthRole>
-       
-    </>      
-        
-       
-  
 
+    <div>
+      <label htmlFor="">Plantación</label>
+      <input type="text" name='plant' />
+    </div>
+
+    <div>
+      <label htmlFor="">Hectáreas</label>
+      <input type="number" name='has' />
+    </div>
+
+    <div>
+      <label htmlFor="">Imagen</label>
+      <input type="text" name='img' />
+    </div>
+
+    <button> Subir Parcela </button>
+
+  </form>
+
+  <div>
+    <h1>Editar/Borrar parcelas del usuario:</h1>
+    <select name="user" id="user" onChange={(e) => getAllParcels(e)}>
+      <option value=""> Seleccionar usuario </option>
+      {users?.map((item) => <option value={item._id}> {item.name} </option>
+
+      )}
+
+    </select>
+
+    {parcelsForEdit.map((item) => <div key={item._id}>
+          <h2>Número de contador: {item.name}</h2>
+          <h3>Plantación: {item.plant}</h3>
+          <h3>Hectáreas: {item.has}</h3>
+          <img src={item.img} alt={item.name}/>
+            <div>
+          <img src="/borrar_24px.png" alt="" onClick={() => deleteParcel(item._id)}/>
+          <Link to={`/update/${item._id}/${item.name}/${item.plant}/${item.has}/${item.img} `}><img src="/editar_24px.png" alt="item.name"/></Link>
+        </div>
+      </div>)
+    }
+
+  </div>
+
+  </AuthRole>
+
+  </>
 }

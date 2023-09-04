@@ -21,9 +21,6 @@ export default function InvoicePage() {
 
 
 
-
-
-
   const getInvoicies = async () => {
 
     const res = await axiosInstance.get(`/invoice/getAllInvoices/${userID}`)

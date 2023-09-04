@@ -55,6 +55,8 @@ const putUser = async (userID) => {
   try{
     const res = await axiosInstance.put("user/" +userID, data);
     console.log("Todo ok");
+    alert("Usuario modificado correctamente")
+    window.location.reload();
    
       console.log(data);
 
