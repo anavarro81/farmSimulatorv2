@@ -103,6 +103,7 @@ export default function UserPage() {
             {user.parcel && <h3>Número de parcelas: {user.parcel.length}</h3>}
             <h4>Localidad: Argamasilla de Alba</h4>
           </div>
+          
         </div>
       )}
 
