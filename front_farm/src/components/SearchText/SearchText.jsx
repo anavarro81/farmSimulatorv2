@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './SearchText.scss';
 const SearchText = ({search}) => {
     const handleChange = (event) => {
         const {value} = event.target;
@@ -8,7 +8,7 @@ const SearchText = ({search}) => {
   return (
     
     <div>
-    <input className="search" type="text" name="filter" placeholder="Buscar..." onChange={handleChange} />
+    <input className="searcher"  type="text" name="filter" placeholder="Buscar..." onChange={handleChange} />
     </div>
   )
 }

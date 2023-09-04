@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../utils/axios'
 import { useParams } from 'react-router-dom'
+import './CalendarPage.scss';
 
 export default function CalendarPage() {
   const {id} = useParams()
@@ -75,8 +76,8 @@ export default function CalendarPage() {
 
 
   return (
-    <div>
-         <form action="" onSubmit={onSubmit}>
+    <div >
+         <form className='margin2' action="" onSubmit={onSubmit}>
 
 
   <label htmlFor="day_of_week"> Dia de riego: </label>
@@ -151,20 +152,20 @@ export default function CalendarPage() {
     </select>
 </div>
 
-<button>Solicitar Riego</button>
+<button className='update-button margin2'>Solicitar Riego</button>
 
 {isError && <p> Ha dado error en el insert</p>}
 
 </form>
 
-<h1>Parcela: {parcel.name}</h1>
+<h1 className='titleCalendar'>Parcela: {parcel.name}</h1>
 
 { parcel.calendar && 
-  parcel.calendar.map((item) => <div key={item._id}>
-            <h2>Día: {item.dayOfWeek}</h2>
-            <h3>Hora inicio: {item.StartHour}</h3>
-            <h3>Hora fin: {item.EndHour}</h3>
-            <h2>Estado: {item.state}</h2>
+  parcel.calendar.map((item) => <div className="flex flex-wrap px-5" key={item._id}>
+            <h2 className='margin'>Día: {item.dayOfWeek}</h2>
+            <h3 className='margin'>Hora inicio: {item.StartHour}</h3>
+            <h3 className='margin'>Hora fin: {item.EndHour}</h3>
+            <h2 className='margin'>Estado: {item.state}</h2>
             
         </div>)
 }
