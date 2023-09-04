@@ -5,16 +5,20 @@ import AuthRole from '../../auth/AuthRole';
 
 
 
+
 export default function InvoicePage() {
 
   const role = localStorage.getItem("role");
   console.log("El Rol del usuario es: ", role);
+
 
   const userID = localStorage.getItem('UserId')
 
   const [invoices, setInvoices] = useState([])
   const [invoicesForEdit, setInvoicesForEdit] = useState([])
   const [users, setUsers] = useState([])
+  const [user, setUser] = useState("")
+
 
 
 
@@ -34,17 +38,41 @@ export default function InvoicePage() {
 
   }
 
+// Borra factura por ID. 
+  const deleteInvoice = async (id) => {
+    
+    console.log('Estoy en deleteInvoice')
+    console.log('Factura = ', id)
+    console.log('Usuario = ', user)
+    
+
+
+    try {      
+      const res = await axiosInstance.delete(`/invoice/delete/${id}/${user}`)
+      console.log('Factura con id = ' +  id + ' borrada con exito')
+      alert("factura borrada");
+      window.location.reload();
+      
+    } catch (error) {
+      console.log('Se ha producido un error al borrar la factura')
+      console.log('error ', error )
+    }
+
+
+
+  }
+
 
   useEffect(() => {
-    console.log('Me ejecuto...');
+    
 
     if(role === "user"){
-      console.log('Recupero las facturas')
+      
       getInvoicies();
     }
 
     if(role === "admin"){
-      console.log('Recupero los roles')
+      
       getUserByRol();
     }
 
@@ -66,7 +94,9 @@ export default function InvoicePage() {
 
 
       const res = await axiosInstance.post('/invoice/', data)
-      alert("Factura añadida");
+
+      alert("factura dada de alta con éxito")
+ 
       
     }
     catch (err) {
@@ -81,6 +111,7 @@ export default function InvoicePage() {
     console.log(e.target.value)
     const res = await axiosInstance.get(`/invoice/getAllInvoices/${e.target.value}`)
     setInvoicesForEdit(res.data)
+    setUser(e.target.value)
   }
 
 
@@ -161,15 +192,20 @@ export default function InvoicePage() {
         
       </select>
 {/* Facturas de un usuario dato */}
+{/* Borrado de */}
       {invoicesForEdit &&
       <ComponetMainInvoices >
      { invoicesForEdit.map((item) =>
-        <div  key={item._id}>
+        <div  key={item.id}>
           <a href={"/FacturaAgosto2023.pdf"}> <img src="/descargar-pdf128.png" alt="" /> </a>
-          <p>{item.month}</p>
+          <p> {item.month} </p>
+          <div>
+            <img src="/borrar_24px.png" alt="" onClick={() => deleteInvoice(item._id)}/>
+          </div>
         </div>)}
-       
+        
       </ComponetMainInvoices>
+      
 
     }
 

@@ -12,8 +12,9 @@ export default function UserPage() {
   const [user, setUser]= useState([]);
   const [users, setUsers] = useState([]);
   const [usersForAdmin, setUsersForAdmin] = useState([]);
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+
   
   const handleChange = (event) => {
     setName(event.target.value);
@@ -46,6 +47,7 @@ const putUser = async (userID) => {
   const data = {
     name: name,
     email: email,
+
     }
     console.log("e", userID);
     console.log(name);
@@ -136,12 +138,11 @@ useEffect(() => {
       <button onClick={() => deleteUser(usersForAdmin._id)}
 >Eliminar usuario</button>
  </div>}
- <form onSubmit={putUser(usersForAdmin._id)}>
+ <form onSubmit={()=>putUser(usersForAdmin._id)}>
     <label htmlFor="name"> Nombre </label>
     <input type="text" value={name} name='name' onChange={handleChange}/>
     <label htmlFor="email"> Email </label>
     <input type="text" value={email} name='email' onChange={handleEmailChange}/>
-    <label htmlFor="email"> Email </label>
 
       <button>Actualizar datos</button> 
 </form>

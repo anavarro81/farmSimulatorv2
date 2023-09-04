@@ -29,7 +29,7 @@ const putCalendar = async (req, res) => {
       new: true,
     });
     if (!updatedCalendar) {
-      return res.status(404).json({ message: "no existe este id de actor" });
+      return res.status(404).json({ message: "no existe este id de calendario" });
     }
     return res.status(200).json(updatedCalendar);
   } catch (error) {

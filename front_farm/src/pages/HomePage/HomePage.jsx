@@ -12,8 +12,9 @@ const HomePage = () => {
     try {
       const response = await axiosInstance.get("user/userAllParcels/" + userID);
       const data = response.data;
-
+      
       setParcelData(data);
+      
 
     } catch (error) {
       console.error("Error al obtener los datos:", error);
@@ -22,6 +23,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getUser();
+    //window.location.reload();
   }, []);
 
   return (

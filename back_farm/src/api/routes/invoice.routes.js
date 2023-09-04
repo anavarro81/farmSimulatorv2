@@ -9,7 +9,7 @@ invoiceRoutes.get("", [isAuth], getInvoice);
 invoiceRoutes.get("/getAllInvoices/:id", getAllInvoices)
 invoiceRoutes.post("/",postInvoice);
 invoiceRoutes.put("/:id", putInvoice);
-invoiceRoutes.delete("/:id", [isAdmin], deleteInvoice);
+invoiceRoutes.delete("/delete/:id/:user", deleteInvoice);
 invoiceRoutes.delete("/getAllInvoices:id", [isAdmin], deleteInvoice);
 
 

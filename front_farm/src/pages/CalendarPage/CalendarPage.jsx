@@ -1,10 +1,21 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../utils/axios'
+import { useParams } from 'react-router-dom'
 
 export default function CalendarPage() {
+  const {id} = useParams()
+
+  console.log(id)
 
    const [isError, setIsError] = useState (false)
+   const [parcel, setParcel]= useState([])
+
+  const getCalendars= async()=> {
+    const res = await axiosInstance.get(`/parcel/${id}`)
+    console.log(res)
+    setParcel(res.data)
+  }
 
   const onSubmit = async(e) => {
     e.preventDefault()
@@ -16,12 +27,18 @@ export default function CalendarPage() {
         state: 'solicitado'
     }
 
+    // const dataToParcel = {
+    //   parcelId: id,
+    //   calendarId: 
+    // }
+
     console.log(data);
     try {
       const res = await axiosInstance.post('/calendar/addCalendar', data)
       console.log('Lo he insertado correctamente');
       setIsError(false)
-      console.log(res);
+      console.log("he dado de alta el calendario" , res.data);
+      addCalendarToParcel(res.data._id);
     }
     catch (err) {
       console.log('Error al insertar', err);
@@ -29,8 +46,32 @@ export default function CalendarPage() {
       console.log("Error = ", err.request.response);
     }
 
+    
+
+  }
+  const addCalendarToParcel = async(calendarId) => {
+
+    const data = {
+      calendar: calendarId
+
+  } 
+
+  alert ("Riego solicitado correctamente")
+  window.location.reload();
+
+  try {
+    const res = await axiosInstance.put (`/parcel/${id}`, data)
+  } catch (err) {
+    console.log('Error al guardar', err);
+    setIsError(true)
+    console.log("Error = ", err.request.response);
+  }
+  
   }
 
+  useEffect(() => {
+    getCalendars();
+  }, []);
 
 
   return (
@@ -48,8 +89,6 @@ export default function CalendarPage() {
     <option value="sabado">Sábado</option>
     <option value="domingo">Domingo</option>
 </select>
-
-
 
 
 <div>
@@ -117,6 +156,18 @@ export default function CalendarPage() {
 {isError && <p> Ha dado error en el insert</p>}
 
 </form>
+
+<h1>Parcela: {parcel.name}</h1>
+
+{ parcel.calendar && 
+  parcel.calendar.map((item) => <div key={item._id}>
+            <h2>Día: {item.dayOfWeek}</h2>
+            <h3>Hora inicio: {item.StartHour}</h3>
+            <h3>Hora fin: {item.EndHour}</h3>
+            <h2>Estado: {item.state}</h2>
+            
+        </div>)
+}
     </div>
   )
 }
