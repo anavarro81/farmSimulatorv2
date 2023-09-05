@@ -2,6 +2,7 @@ import { axiosInstance } from '../../utils/axios'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import AuthRole from '../../auth/AuthRole';
+import './InvoicePage.scss'; 
 
 
 
@@ -114,26 +115,26 @@ export default function InvoicePage() {
 
 
   return <>
-
+<div className="invoice-page">
     {invoices &&
-      <ComponetMainInvoices >
+      <div>
      { invoices.map((item) =>
         <div  key={item?._id}>
           <a href={"/FacturaAgosto2023.pdf"}> <img src="/descargar-pdf128.png" alt="" /> </a>
           <p>{item?.month}</p>
         </div>)}
        
-      </ComponetMainInvoices>
+      </div>
 
     }
 
 <AuthRole>
     <form onSubmit={onSubmit}>
 
-      <h2> Alta de factura </h2>
+      <h2 className="invoice-header"> Alta de factura </h2>
 
 {/* Listado de usurios */}
- 
+ <div className="invoice-info">
       <select name="user" id="user">
         <option value=""> Seleccionar usuario </option>
         {users?.map((item) => <option value={item._id}> {item.name} </option>
@@ -143,11 +144,11 @@ export default function InvoicePage() {
         
       </select>
 
-      
+      </div>
       
       <div>
         <label htmlFor="">Año</label>
-        <input type="number" name='year' />
+        <input className="shadow appearance-none border border-black-500 rounded w-80 py-1 px-1 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="number" name='year' />
       </div>
 
 
@@ -170,16 +171,16 @@ export default function InvoicePage() {
 
       <div>
         <label htmlFor=""> Archivo </label>
-        <input type="text" name='file' />
+        <input className="shadow appearance-none border border-black-500 rounded w-80 py-1 px-1 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" name='file' />
       </div>
 
-      <button> Subir Factura </button>
+      <button className="update-button"> Subir Factura </button>
 
 
     </form>
 
     <div>
-       <h1>Ver Facturas</h1>
+       <h1>Ver/Borrar Facturas</h1>
        <select name="user" id="user" onChange={(e) => getAllInvoice(e)}>
         <option value=""> Seleccionar usuario </option>
         {users?.map((item) => <option value={item._id}> {item.name} </option>
@@ -191,7 +192,7 @@ export default function InvoicePage() {
 {/* Facturas de un usuario dato */}
 {/* Borrado de */}
       {invoicesForEdit &&
-      <ComponetMainInvoices >
+      <div >
      { invoicesForEdit && invoicesForEdit.map((item) =>
         <div  key={item?.id}>
           <a href={"/FacturaAgosto2023.pdf"}> <img src="/descargar-pdf128.png" alt="" /> </a>
@@ -201,7 +202,7 @@ export default function InvoicePage() {
           </div>
         </div>)}
         
-      </ComponetMainInvoices>
+      </div>
       
 
     }
@@ -214,24 +215,7 @@ export default function InvoicePage() {
 
 
 </AuthRole>
-
+</div>
   </>
 
 }
-
-
-const ComponetMainInvoices = styled.div`
-  display: flex;
-  margin: 10px;
-
-  & > div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease;
-    &:hover{
-      transform: scale(1.03);
-    }
-
-  }
-`
