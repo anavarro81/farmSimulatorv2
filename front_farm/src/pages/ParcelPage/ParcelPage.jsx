@@ -189,12 +189,12 @@ export default function ParcelPage() {
               ))}
             </select>
 
-            {parcelsForEdit.map((item) => (
-              <div key={item._id} >
-                <h3>Número de contador: {item.name}</h3>
-                <h3>Plantación: {item.plant}</h3>
-                <h3>Hectáreas: {item.has}</h3>
-                <img src={item.img} alt={item.name} />
+            {parcelsForEdit && parcelsForEdit.map((item) => (
+              <div key={item?._id} >
+                <h3>Número de contador: {item?.name}</h3>
+                <h3>Plantación: {item?.plant}</h3>
+                <h3>Hectáreas: {item?.has}</h3>
+                <img src={item?.img} alt={item?.name} />
                 <div className="flex flex-wrap">
                   <img
                     src="/borrar_24px.png"
@@ -202,7 +202,7 @@ export default function ParcelPage() {
                     onClick={() => deleteParcel(item._id)}
                   />
                   <Link
-                    to={`/update/${item._id}/${item.name}/${item.plant}/${item.has}/${item.img} `}
+                    to={`/update/${item?._id}/${item?.name}/${item?.plant}/${item?.has}/${item?.img} `}
                   >
                     <img src="/editar_24px.png" alt="item.name" />
                   </Link>
