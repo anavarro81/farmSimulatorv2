@@ -103,8 +103,11 @@ export default function ParcelPage() {
       {role === "user" && <SearchText  search={updateFilter} />}
 
       <div className="flex flex-wrap px-5">
-        {parcelsCopy.map((item) => (
-          <div key={item?._id} className="p-4 md:w-1/3">
+
+        {parcelsCopy &&
+        parcelsCopy.map((item) => (
+          <div key={item._id} className="p-4 md:w-1/3">
+
             <div className="h-full border-2 border-gray-500 border-opacity-60 rounded-lg overflow-hidden">
               <img
                 className="lg:h-48 md:h-36 w-full object-contain object-center"
@@ -153,7 +156,7 @@ export default function ParcelPage() {
             <select name="user" id="user" className="select">
               <option value="" className="py-10"> Seleccionar usuario </option>
               {users?.map((item) => (
-                <option value={item._id}> {item.name} </option>
+                <option value={item?._id}> {item.name} </option>
               ))}
             </select>
 
@@ -185,11 +188,15 @@ export default function ParcelPage() {
             <select className="select" name="user" id="user" onChange={(e) => getAllParcels(e)}>
               <option value="" > Seleccionar usuario </option>
               {users?.map((item) => (
-                <option value={item._id}> {item.name} </option>
+                <option value={item?._id}> {item.name} </option>
               ))}
             </select>
 
-            {parcelsForEdit && parcelsForEdit.map((item) => (
+
+            {parcelsForEdit &&
+
+            parcelsForEdit.map((item) => (
+
               <div key={item?._id} >
                 <h3>Número de contador: {item?.name}</h3>
                 <h3>Plantación: {item?.plant}</h3>
@@ -199,12 +206,14 @@ export default function ParcelPage() {
                   <img
                     src="/borrar_24px.png"
                     alt=""
-                    onClick={() => deleteParcel(item._id)}
+                    onClick={() => deleteParcel(item?._id)}
                   />
                   <Link
-                    to={`/update/${item?._id}/${item?.name}/${item?.plant}/${item?.has}/${item?.img} `}
+
+                    to={`/update/${item?._id}`}
+
                   >
-                    <img src="/editar_24px.png" alt="item.name" />
+                    <img src="/editar_24px.png" alt="item?.name" />
                   </Link>
                 </div>
               </div>
