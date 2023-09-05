@@ -106,7 +106,7 @@ export default function ParcelPage() {
 
         {parcelsCopy &&
         parcelsCopy.map((item) => (
-          <div key={item._id} className="p-4 md:w-1/3">
+          <div key={item?._id} className="p-4 md:w-1/3">
 
             <div className="h-full border-2 border-gray-500 border-opacity-60 rounded-lg overflow-hidden">
               <img

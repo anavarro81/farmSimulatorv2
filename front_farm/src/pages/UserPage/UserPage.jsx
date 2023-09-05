@@ -3,6 +3,7 @@ import { axiosInstance } from '../../utils/axios';
 import AuthRole from '../../auth/AuthRole';
 import './UserPage.scss'; 
 
+
 export default function UserPage() {
   const role = localStorage.getItem("role");
   const userID = localStorage.getItem("UserId");
@@ -13,6 +14,7 @@ export default function UserPage() {
   const [usersForAdmin, setUsersForAdmin] = useState([]);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+
 
   const handleChange = (event) => {
     setName(event.target.value);
@@ -47,9 +49,8 @@ export default function UserPage() {
     console.log(email);
     try {
       const res = await axiosInstance.put("user/" + userID, data);
-      console.log("Todo ok");
-      console.log(data);
-      alert("Usuario Modificado")
+      alert("Usuario modificado")
+      
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +60,8 @@ export default function UserPage() {
     try {
       console.log(userID);
       const res = await axiosInstance.delete("user/" + userID);
-      alert("Usuario eliminado");
+      alert("Usuario Eliminado")
+;
     } catch (err) {
       console.log(err);
     }
@@ -138,6 +140,7 @@ export default function UserPage() {
                 type="text"
                 value={name}
                 name="name"
+                className="shadow appearance-none border border-black-500 rounded w-80 py-1 px-1 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={handleChange}
               />
               <label htmlFor="email">Email</label>
@@ -145,6 +148,7 @@ export default function UserPage() {
                 type="text"
                 value={email}
                 name="email"
+                className="shadow appearance-none border border-black-500 rounded w-80 py-1 px-1 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={handleEmailChange}
               />
               <button className="update-button">Actualizar datos</button>
