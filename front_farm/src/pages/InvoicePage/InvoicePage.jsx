@@ -118,9 +118,9 @@ export default function InvoicePage() {
     {invoices &&
       <ComponetMainInvoices >
      { invoices.map((item) =>
-        <div  key={item._id}>
+        <div  key={item?._id}>
           <a href={"/FacturaAgosto2023.pdf"}> <img src="/descargar-pdf128.png" alt="" /> </a>
-          <p>{item.month}</p>
+          <p>{item?.month}</p>
         </div>)}
        
       </ComponetMainInvoices>
@@ -192,12 +192,12 @@ export default function InvoicePage() {
 {/* Borrado de */}
       {invoicesForEdit &&
       <ComponetMainInvoices >
-     { invoicesForEdit.map((item) =>
-        <div  key={item.id}>
+     { invoicesForEdit && invoicesForEdit.map((item) =>
+        <div  key={item?.id}>
           <a href={"/FacturaAgosto2023.pdf"}> <img src="/descargar-pdf128.png" alt="" /> </a>
-          <p> {item.month} </p>
+          <p> {item?.month} </p>
           <div>
-            <img src="/borrar_24px.png" alt="" onClick={() => deleteInvoice(item._id)}/>
+            <img src="/borrar_24px.png" alt="" onClick={() => deleteInvoice(item?._id)}/>
           </div>
         </div>)}
         
