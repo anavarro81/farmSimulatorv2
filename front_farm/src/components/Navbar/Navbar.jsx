@@ -136,7 +136,7 @@ const NavBar = () => {
                   }
                   >
                     {" "}
-                    <span> Cerrar sesiÃ³n </span>
+                    <span> Cerrar sesión </span>
                   </NavLink>
                 )}
               </li>

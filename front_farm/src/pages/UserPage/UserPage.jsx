@@ -98,9 +98,9 @@ export default function UserPage() {
         <div>
           <h1 className="user-header">Comunidad de Regantes Estrecho de Peñaroya</h1>
           <div className="user-info">
-            <h2>Nombre: {user.name}</h2>
-            <h2>Email: {user.email}</h2>
-            {user.parcel && <h3>Número de parcelas: {user.parcel.length}</h3>}
+            <h2>Nombre: {user?.name}</h2>
+            <h2>Email: {user?.email}</h2>
+            {user?.parcel && <h3>Número de parcelas: {user?.parcel.length}</h3>}
             <h4>Localidad: Argamasilla de Alba</h4>
           </div>
           
@@ -112,16 +112,16 @@ export default function UserPage() {
         <select name="user" id="user" onChange={(e) => getUsersForAdmin(e)}>
           <option value="">Seleccionar usuario</option>
           {users?.map((item) => (
-            <option value={item._id}>{item.name}</option>
+            <option value={item?._id}>{item?.name}</option>
           ))}
         </select>
         {usersForAdmin && (
           <div className="admin-user-info">
             <h1>Comunidad de Regantes Estrecho de Peñaroya</h1>
-            <h2>Nombre: {usersForAdmin.name}</h2>
-            <h2>Email: {usersForAdmin.email}</h2>
+            <h2>Nombre: {usersForAdmin?.name}</h2>
+            <h2>Email: {usersForAdmin?.email}</h2>
             {usersForAdmin.parcel && (
-              <h3>Número de parcelas: {usersForAdmin.parcel.length}</h3>
+              <h3>Número de parcelas: {usersForAdmin?.parcel.length}</h3>
             )}
             <h4>Localidad: Argamasilla de Alba</h4>
 
