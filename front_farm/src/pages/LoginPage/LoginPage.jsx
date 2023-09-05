@@ -20,7 +20,8 @@ export default function LoginPage() {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       localStorage.setItem('UserId', res.data.id);
-      navigate('/home');
+      
+      if (res.data.role === "user") {navigate('/home')} else {navigate("/parcel")};
     } catch (err) {
       console.log(err);
       setIsError(true);
