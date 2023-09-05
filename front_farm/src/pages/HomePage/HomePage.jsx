@@ -3,6 +3,7 @@ import { axiosInstance } from "../../utils/axios";
 import { Link } from "react-router-dom";
 
 const userID = localStorage.getItem("UserId");
+const role = localStorage.getItem("role");
 
 const HomePage = () => {
   const [parcelData, setParcelData] = useState([]);
@@ -24,7 +25,11 @@ const HomePage = () => {
   }, []);
 
   return (
+
     <div>
+      {role === "user" && (
+    <div>
+    
       <div id="c_0abf44853601b19b9fb79857b54ebbc3" className="ancho">
         <iframe
           title="weather"
@@ -86,6 +91,7 @@ const HomePage = () => {
                   </Link>
       </div>
     </div>
+      )}</div>
   );
 };
 
