@@ -118,9 +118,9 @@ export default function InvoicePage() {
     {invoices &&
       <ComponetMainInvoices >
      { invoices.map((item) =>
-        <div  key={item._id}>
+        <div  key={item?._id}>
           <a href={"/FacturaAgosto2023.pdf"}> <img src="/descargar-pdf128.png" alt="" /> </a>
-          <p>{item.month}</p>
+          <p>{item?.month}</p>
         </div>)}
        
       </ComponetMainInvoices>
