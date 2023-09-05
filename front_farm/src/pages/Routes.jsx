@@ -24,7 +24,7 @@ export default function Routes() {
                 <Route path="/invoice" element={<AuthToken><InvoicePage /></AuthToken>} />
                 <Route path="/user" element={<AuthToken><UserPage /></AuthToken>} />
                 <Route path="/calendar/:id" element={<AuthToken><CalendarPage /></AuthToken>} />
-                <Route path="/update/:id/:name/:plant/:has/:img" element={<AuthToken><EditParcelPage /></AuthToken>} />
+                <Route path="/update/:id" element={<AuthToken><EditParcelPage /></AuthToken>} />
             
         </Route>    
         <Route path="/" element={<LoginPage />} />

@@ -103,7 +103,8 @@ export default function ParcelPage() {
       {role === "user" && <SearchText  search={updateFilter} />}
 
       <div className="flex flex-wrap px-5">
-        {parcelsCopy.map((item) => (
+        {parcelsCopy &&
+        parcelsCopy.map((item) => (
           <div key={item._id} className="p-4 md:w-1/3">
             <div className="h-full border-2 border-gray-500 border-opacity-60 rounded-lg overflow-hidden">
               <img
@@ -122,7 +123,7 @@ export default function ParcelPage() {
                 <p className="leading-relaxed mb-3">Hectáreas: {item.has}</p>
                 <div className="flex items-center flex-wrap">
                   <Link
-                    to={`/calendar/${item._id}`}
+                    to={`/calendar/${item?._id}`}
                     className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
                   >
                     Programar riego
@@ -153,7 +154,7 @@ export default function ParcelPage() {
             <select name="user" id="user" className="select">
               <option value="" className="py-10"> Seleccionar usuario </option>
               {users?.map((item) => (
-                <option value={item._id}> {item.name} </option>
+                <option value={item?._id}> {item.name} </option>
               ))}
             </select>
 
@@ -185,26 +186,28 @@ export default function ParcelPage() {
             <select className="select" name="user" id="user" onChange={(e) => getAllParcels(e)}>
               <option value="" > Seleccionar usuario </option>
               {users?.map((item) => (
-                <option value={item._id}> {item.name} </option>
+                <option value={item?._id}> {item.name} </option>
               ))}
             </select>
 
-            {parcelsForEdit.map((item) => (
-              <div key={item._id} >
-                <h3>Número de contador: {item.name}</h3>
-                <h3>Plantación: {item.plant}</h3>
-                <h3>Hectáreas: {item.has}</h3>
-                <img src={item.img} alt={item.name} />
+            {parcelsForEdit &&
+
+            parcelsForEdit.map((item) => (
+              <div key={item?._id} >
+                <h3>Número de contador: {item?.name}</h3>
+                <h3>Plantación: {item?.plant}</h3>
+                <h3>Hectáreas: {item?.has}</h3>
+                <img src={item?.img} alt={item?.name} />
                 <div className="flex flex-wrap">
                   <img
                     src="/borrar_24px.png"
                     alt=""
-                    onClick={() => deleteParcel(item._id)}
+                    onClick={() => deleteParcel(item?._id)}
                   />
                   <Link
-                    to={`/update/${item._id}/${item.name}/${item.plant}/${item.has}/${item.img} `}
+                    to={`/update/${item?._id}`}
                   >
-                    <img src="/editar_24px.png" alt="item.name" />
+                    <img src="/editar_24px.png" alt="item?.name" />
                   </Link>
                 </div>
               </div>

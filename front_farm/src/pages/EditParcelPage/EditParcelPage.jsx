@@ -6,9 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function EditParcelPage(){
     
 const navigate = useNavigate();
- const {id, name, plant, has, img} = useParams()
+ const {id} = useParams()
  console.log(id);
- console.log(name);
+ 
  const [ parcel, setParcel ] = useState ({id:"", name:"", has: "", img:""});
 
   const handleChange = (event) => {
@@ -16,10 +16,29 @@ const navigate = useNavigate();
     setParcel({[name]: value})
     console.log(event)
   }
-    //setParcel({name: name})
 
-    useEffect(() => {
-        setParcel({name: name, plant: plant, has: has, img: img});
+const getParcelInfo = async () => {
+  try {
+    const res = await axiosInstance.get(`/parcel/${id}`);
+    setParcel({
+      name: res.data.name,
+      plant: res.data.plant,
+      has: res.data.has,
+      img: res.data.img
+
+  })
+  }
+  catch(error) {
+    console.log("Se ha producido un error al obtener la parcera, error", error)
+  }
+
+}
+
+  
+
+    useEffect(() => {        
+      getParcelInfo()      
+
     }, [])
 
 
