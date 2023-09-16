@@ -1,3 +1,4 @@
+// front actualizado.
 import './App.css';
 import NavBar from './components/Navbar/Navbar';
 import Routes from "./pages/Routes";
